@@ -2,7 +2,7 @@
 namespace fastphp;
 
 //定义框架根目录
-define('CORE_PATH') or define('CORE_PATH', __DIR__);
+defined('CORE_PATH') or define('CORE_PATH', __DIR__);
 
 calss fastphp{
 	protected $config = [];
@@ -13,7 +13,12 @@ calss fastphp{
 
 
 	public function run(){
-
+		spl_autoload_register(array($this , 'loadClass'));
+		$this->setReporting();
+		$this->removeMagicQuotes();
+		$this->unregisterGlobals();
+		$this->setDbConfig();
+		$this->route();
 	}
 
 	public function route(){
